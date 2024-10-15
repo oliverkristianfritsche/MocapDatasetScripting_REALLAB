@@ -20,26 +20,43 @@ def load_mot_file(file):
     return df
 
 def load_sensor_csv(file_path):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-    
-    data_lines = lines[3:]
-    columns = data_lines[0].strip().split(',')
-    units = data_lines[1].strip().split(',')
-    data = data_lines[2:]
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+        
+        data_lines = lines[3:]
+        columns = data_lines[0].strip().split(',')
+        units = data_lines[1].strip().split(',')
+        data = data_lines[2:]
 
-    data_rows = []
-    for line in data:
-        row = line.strip().split(',')
-        if len(row) < len(columns):
-            row.extend([''] * (len(columns) - len(row)))
-        elif len(row) > len(columns):
-            row = row[:len(columns)]
-        data_rows.append(row)
-    
-    df = pd.DataFrame(data_rows, columns=columns)
+        data_rows = []
+        for line in data:
+            row = line.strip().split(',')
+            if len(row) < len(columns):
+                row.extend([''] * (len(columns) - len(row)))
+            elif len(row) > len(columns):
+                row = row[:len(columns)]
+            data_rows.append(row)
+        
+        df = pd.DataFrame(data_rows, columns=columns)
 
-    return df
+        return df
+    except Exception as e:
+        print(f"Error loading CSV file {file_path}: {e}")
+        return None
+
+def quick_check_sensor_csv(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            # Only read the necessary lines for a quick check
+            lines = [next(file) for _ in range(5)]
+        if len(lines) < 5:
+            raise ValueError("The CSV file does not contain enough lines for expected data.")
+        columns = lines[3].strip().split(',')
+        return columns
+    except Exception as e:
+        print(f"Error during quick check of CSV file {file_path}: {e}")
+        return None
 
 def clean_sensor_data(df):
     sensor_data_np = df.to_numpy()
@@ -160,8 +177,8 @@ def process_subject(subject, trial_types, speeds):
     Process the data for a single subject.
     """
     subject_folder = f"P{str(subject).zfill(2)}"
-    mot_folder = f"g:/My Drive/sd_datacollection_v3/{subject_folder}/processed_joint_kinematics/"
-    csv_folder = f"g:/My Drive/sd_datacollection_v3/{subject_folder}/raw_sensor/"
+    mot_folder = f"g:/My Drive/sd_datacollection_v4/{subject_folder}/processed_joint_kinematics/"
+    csv_folder = f"g:/My Drive/sd_datacollection_v4/{subject_folder}/raw_sensor/"
     
     # Combine data for this subject
     combined_data = combine_data(mot_folder, csv_folder, trial_types, speeds,subject, method='downsample')
@@ -203,7 +220,6 @@ def verify_trial_types_and_speeds(subject, mot_files, csv_files, trial_types, sp
     
 
 
-
 def main():
     subjects = [1,2,3,4,5,6,7,8,9,10,11,12,13]
     trial_types = ['AS', 'EF', 'ER', 'OR', 'CB']
@@ -220,8 +236,8 @@ def main():
 
     for subject in subjects:
         subject_folder = f"P{str(subject).zfill(2)}"  # Ensure subject folder is PXX with leading zero for single digits
-        mot_folder = f"g:/My Drive/sd_datacollection_v3/{subject_folder}/processed_joint_kinematics/"
-        csv_folder = f"g:/My Drive/sd_datacollection_v3/{subject_folder}/raw_sensor/"
+        mot_folder = f"g:/My Drive/sd_datacollection_v4/{subject_folder}/processed_joint_kinematics/"
+        csv_folder = f"g:/My Drive/sd_datacollection_v4/{subject_folder}/raw_sensor/"
 
         mot_files = [f for f in os.listdir(mot_folder) if f.endswith('.mot')]
         csv_files = [f for f in os.listdir(csv_folder) if f.endswith('.csv')]
@@ -230,6 +246,18 @@ def main():
 
     # Use a lock to make tqdm thread-safe
     lock = threading.Lock()
+
+    with ThreadPoolExecutor(max_workers=5, thread_name_prefix='csv_thread') as csv_executor:
+        csv_futures = {csv_executor.submit(quick_check_sensor_csv, os.path.join(f"g:/My Drive/sd_datacollection_v4/P{str(subject).zfill(2)}/raw_sensor/", csv_file)): csv_file 
+                       for subject in subjects for csv_file in os.listdir(f"g:/My Drive/sd_datacollection_v4/P{str(subject).zfill(2)}/raw_sensor/") if csv_file.endswith('.csv')}
+        for future in as_completed(csv_futures):
+            csv_file = csv_futures[future]
+            try:
+                columns = future.result()
+                if columns is None:
+                    print(f"Error during quick check of CSV file: {csv_file}")
+            except Exception as e:
+                print(f"Error during quick check of CSV file {csv_file}: {e}")
 
     with ThreadPoolExecutor(max_workers=5, thread_name_prefix='subject_thread') as executor:
         futures = {executor.submit(process_subject, subject, trial_types, speeds): subject for subject in subjects}
@@ -253,7 +281,7 @@ def main():
                 print(f"Finished processing subject {subject}")
 
     # Save all data to one HDF5 file
-    hdf5_path = "g:/My Drive/sd_datacollection_v3/all_subjects_data.h5"
+    hdf5_path = "g:/My Drive/sd_datacollection_v4/all_subjects_data_final.h5"
     save_to_hdf5(data_dict, hdf5_path)
 
     # Print the shape of each DataFrame
