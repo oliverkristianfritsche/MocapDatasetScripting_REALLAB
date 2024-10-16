@@ -13,11 +13,11 @@ This Python script is designed for combining all subject data into a single HDF5
 - Process and clean the data.
 - Combine the data into a single HDF5 file.
 
-### [movement_type_classifier.ipynb]
+### [movement_type_classifier.ipynb](movement_type_classifier.ipynb)
 This Jupyter Notebook trains a simple classifier to predict movement types from the dataset.
 
-### [visualize_subject_distributions.py]
+### [visualize_subject_distributions.py](visualize_subject_distributions.py)
 This script analyzes the distribution of subject attributes such as height, age, and weight. It generates visualizations to help understand the demographic characteristics of the subjects in the dataset.
 
-### [visualize_speed_distributions.py]
+### [visualize_speed_distributions.py](visualize_speed_distributions.py)
 This script visualizes the joint speed distributions from motion capture (MOT) files. It creates plots to analyze the speed profiles of different joints during various trial types and speeds, aiding in the understanding of movement dynamics.
