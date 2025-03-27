@@ -44,9 +44,9 @@ def identify_trial_and_speed(base_name, trial_types, speeds):
     return None, None
 
 channels_joints = {
-    'elbow_flex_r': 'Elbow Flexion',
-    'arm_flex_r': 'Arm Flexion',
-    'arm_add_r': 'Arm Adduction'
+    'elbow_flex_r': '(a)',
+    'arm_flex_r': '(b)',
+    'arm_add_r': '(c)'
 }
 
 def plot_combined_joint_speed_distributions(mot_folder, subjects, trial_types, speeds):
@@ -71,10 +71,10 @@ def plot_combined_joint_speed_distributions(mot_folder, subjects, trial_types, s
 
     # Create a single row of KDE plots for each joint
     fig, axes = plt.subplots(nrows=1, ncols=len(channels_joints), figsize=(6 * len(channels_joints), 6))
-    fig.suptitle("Combined Joint Speed KDE Distributions Across All Subjects and Speeds", fontsize=16, fontweight='bold')
+    # fig.suptitle("Combined Joint Speed KDE Distributions Across All Subjects and Speeds", fontsize=16, fontweight='bold')
 
     colors = ["#1f77b4", "#ff7f0e", "#2ca02c"]
-
+    fs = 22
     for ax, (joint, title), color in zip(axes, channels_joints.items(), colors):
         speeds = combined_speeds[joint]
         
@@ -87,17 +87,36 @@ def plot_combined_joint_speed_distributions(mot_folder, subjects, trial_types, s
         sns.kdeplot(speeds, ax=ax, color=color, fill=True, alpha=0.6)
         ax.set_xlim(x_min, x_max)
         
-        ax.set_title(f"Right {title}", fontsize=20)
-        ax.set_xlabel("Speed (angular velocity)", fontsize=18)
-        ax.set_ylabel("Density", fontsize=18)
-        ax.tick_params(axis='both', labelsize=14, width=0.8, color='gray')
+        # ax.set_title(f"Right {title}", fontsize=20)
+        ax.set_title(f"{title}", fontsize=fs, fontweight='bold', color='black')
+        # ax.set_xlabel("Speed (angular velocity)", fontsize=18)
+        # ax.set_ylabel("Density", fontsize=18)
+        ax.tick_params(axis='both', labelsize=fs, width=0.8, color='gray')
 
-        ax.text(0.98, 0.95, f"Mean: {mean_speed:.2f}\nMedian: {median_speed:.2f}\nStd Dev: {std_speed:.2f}",
-                transform=ax.transAxes, ha="right",fontsize=12, va="top",
-                bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.3'))
+        #disable y ticks
+        # ax.set_yticklabels([])
+        # ax.set_yticks([])
+
+        #remove right and top spines
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+
+        #remove y label
+        ax.set_ylabel(None)
+
+        if float(f"{mean_speed:.2f}") == 0.00: #account for negative when 2 decimals are 0
+            mean_speed = 0.00
+
+        ax.text(0.98, 0.95, f"Mean: {mean_speed:.2f}\nStd Dev: {std_speed:.2f}",
+                transform=ax.transAxes, ha="right",fontsize=fs-2, va="top")
+
+        print(f"{joint}: Mean: {mean_speed:.2f}, Median: {median_speed:.2f}, Std Dev: {std_speed:.2f} for {title}")
 
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.show()
+
+    return combined_speeds
+
 def main():
     mot_folder = "g:/My Drive/sd_datacollection_v4"
     subjects = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -110,7 +129,12 @@ def main():
         'CB': ['S', 'N', 'F']
     }
 
-    plot_combined_joint_speed_distributions(mot_folder, subjects, trial_types, speeds)
+    combined_speed = plot_combined_joint_speed_distributions(mot_folder, subjects, trial_types, speeds)
+
+    # Save the combined speed distributions to a CSV file
+    combined_speed_df = pd.DataFrame(combined_speed)
+    combined_speed_df.to_csv("combined_speed_distributions.csv", index=False)
+    
 
 if __name__ == "__main__":
     main()
