@@ -21,27 +21,27 @@
 
 ### 🎞️ Movement Videos
 
-<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
-    <div style="text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; flex: 1; min-width: 200px;">
-        <img src="media/armswing.gif" alt="Arm Swing" style="width: 100%; aspect-ratio: 9/16; object-fit: cover;">
-        <h4>Arm Swing</h4>
-    </div>
-    <div style="text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; flex: 1; min-width: 200px;">
-        <img src="media/crossbody.gif" alt="Cross Body Reach" style="width: 100%; aspect-ratio: 9/16; object-fit: cover;">
-        <h4>Cross Body Reach</h4>
-    </div>
-    <div style="text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; flex: 1; min-width: 200px;">
-        <img src="media/elbowflex.gif" alt="Elbow Flexion" style="width: 100%; aspect-ratio: 9/16; object-fit: cover;">
-        <h4>Elbow Flexion</h4>
-    </div>
-    <div style="text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; flex: 1; min-width: 200px;">
-        <img src="media/overheadreach.gif" alt="Overhead Reach" style="width: 100%; aspect-ratio: 9/16; object-fit: cover;">
-        <h4>Overhead Reach</h4>
-    </div>
-    <div style="text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px; flex: 1; min-width: 200px;">
-        <img src="media/shoulderrotation.gif" alt="Shoulder Rotation" style="width: 100%; aspect-ratio: 9/16; object-fit: cover;">
-        <h4>Shoulder Rotation</h4>
-    </div>
+<div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px;">
+  <div style="flex: 0 0 160px; text-align: center;">
+    <img src="media/armswing.gif" alt="Arm Swing" style="width: 100%; border-radius: 6px;">
+    <h4>Arm Swing</h4>
+  </div>
+  <div style="flex: 0 0 160px; text-align: center;">
+    <img src="media/crossbody.gif" alt="Cross Body Reach" style="width: 100%; border-radius: 6px;">
+    <h4>Cross Body Reach</h4>
+  </div>
+  <div style="flex: 0 0 160px; text-align: center;">
+    <img src="media/elbowflex.gif" alt="Elbow Flexion" style="width: 100%; border-radius: 6px;">
+    <h4>Elbow Flexion</h4>
+  </div>
+  <div style="flex: 0 0 160px; text-align: center;">
+    <img src="media/overheadreach.gif" alt="Overhead Reach" style="width: 100%; border-radius: 6px;">
+    <h4>Overhead Reach</h4>
+  </div>
+  <div style="flex: 0 0 160px; text-align: center;">
+    <img src="media/shoulderrotation.gif" alt="Shoulder Rotation" style="width: 100%; border-radius: 6px;">
+    <h4>Shoulder Rotation</h4>
+  </div>
 </div>
 
 ---
