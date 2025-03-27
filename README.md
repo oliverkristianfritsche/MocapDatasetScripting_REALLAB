@@ -16,10 +16,13 @@
 
 ### 🎞️ Movement Videos
 
-| Arm Swing | Cross Body Reach | Elbow Flexion | Overhead Reach | Shoulder Rotation |
-|-----------|------------------|----------------|----------------|-------------------|
-| <img src="media/armswing.gif" width="180"/> | <img src="media/crossbody.gif" width="180"/> | <img src="media/elbowflex.gif" width="180"/> | <img src="media/overheadreach.gif" width="180"/> | <img src="media/shoulderrotation.gif" width="180"/> |
+| Arm Swing | Cross Body Reach | Elbow Flexion |
+|-----------|------------------|----------------|
+| <img src="media/armswing.gif" width="200"/> | <img src="media/crossbody.gif" width="200"/> | <img src="media/elbowflex.gif" width="200"/> |
 
+| Overhead Reach | Shoulder Rotation | |
+|----------------|-------------------|--|
+| <img src="media/overheadreach.gif" width="200"/> | <img src="media/shoulderrotation.gif" width="200"/> | |
 ---
 
 ## 📂 Processing Scripts
