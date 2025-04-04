@@ -27,7 +27,7 @@
 
 ## 📂 Processing Scripts
 
-### [`batch_IK.ipynb`](processing/batch_IK.ipynb) 📊  
+### [`batch_IK.ipynb`](processing/batch_IK.ipynb) 
 Performs batch processing for OpenSim inverse kinematics (IK).
 
 - Data loading and transformation  
@@ -36,7 +36,7 @@ Performs batch processing for OpenSim inverse kinematics (IK).
 
 ---
 
-### [`batch_processH5.py`](processing/batch_processH5.py) 🔄  
+### [`batch_processH5.py`](processing/batch_processH5.py)   
 Combines all subject HDF5 files into a single file.
 
 - Reads from multiple `.h5` datasets  
@@ -45,7 +45,7 @@ Combines all subject HDF5 files into a single file.
 
 ---
 
-### [`clean_sensors.py`](processing/clean_sensors.py) 🧹  
+### [`clean_sensors.py`](processing/clean_sensors.py)
 Cleans raw sensor `.csv` files by removing unused channels.
 
 - Removes Electromyography (sEMG)  
@@ -53,7 +53,7 @@ Cleans raw sensor `.csv` files by removing unused channels.
 
 ---
 
-### [`movement_type_classifier.ipynb`](processing/movement_type_classifier.ipynb) 🤖  
+### [`movement_type_classifier.ipynb`](processing/movement_type_classifier.ipynb) 
 Trains a classifier to predict movement types from time-series sensor data.
 
 - Feature extraction  
@@ -62,7 +62,7 @@ Trains a classifier to predict movement types from time-series sensor data.
 
 ---
 
-### [`visualize_subject_distributions.py`](processing/visualize_subject_distributions.py) 👥  
+### [`visualize_subject_distributions.py`](processing/visualize_subject_distributions.py)  
 Analyzes subject demographics.
 
 - Height  
@@ -71,7 +71,7 @@ Analyzes subject demographics.
 
 ---
 
-### [`visualize_speed_distributions.py`](processing/visualize_speed_distributions.py) 📈  
+### [`visualize_speed_distributions.py`](processing/visualize_speed_distributions.py) 
 Plots joint angular speeds to analyze movement profiles.
 
 - Speed histograms  
