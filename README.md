@@ -48,8 +48,7 @@ Combines all subject HDF5 files into a single file.
 ### [`clean_sensors.py`](processing/clean_sensors.py)
 Cleans raw sensor `.csv` files by removing unused channels.
 
-- Removes Electromyography (sEMG)  
-- Removes Magnetometer data
+- Remove unused sensor channels
 
 ---
 
